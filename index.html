@@ -7,13 +7,13 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Term Project</title>
+    <title>Eight 8</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="cover.css" rel="stylesheet">
+    <link href="css/cover.css" rel="stylesheet">
   </head>
 
   <body>
@@ -26,7 +26,7 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">Term Project</h3>
+              <h3 id="title" class="masthead-brand">Term Project</h3>
               <nav class="nav nav-masthead">
                 <a class="nav-link active" href="#">Home</a>
               <!--  <a class="nav-link" href="#">Features</a>
@@ -34,7 +34,6 @@
               </nav>
             </div>
           </div>
-
           <div class="inner cover">
             <h1 class="cover-heading">Locate your job.</h1>
             <p class="lead">(put information here)Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
@@ -58,22 +57,29 @@
 						    <!-- Modal Body -->
 							<div class="modal-body">
 								
-								<form role="form">
+								<form role="form" action="companysearch.php" method="GET">
 								  <div class="form-group">
 									<label for="Job Title">Job Title</label>
 									  <input type="text" class="form-control"
-									  id="jt" placeholder="Enter job title"/>
+									  id="jt" placeholder="Enter job title" name="title"/>
 								  </div>
 								  
 								  <div class="form-group">
 									<label for="location">Location:</label>
 									  <input type="text" class="form-control"
-										  id="locate" placeholder="Enter location"/>
+										  id="locate" placeholder="Enter location" value="" name="location"/>
 								  </div>
-								  
+                                    
+								  <div class="form-group">
+									<label for="radius">Search radius:</label>
+									  <input type="number" class="form-control"
+										  id="radius" placeholder="Enter location radius" name="radius"/>
+                                      
+								  </div>
+                                    
 								  <div class="form-group">
 									<label for="position">Select Position:</label>
-										<select class="form-control" id="pos">
+										<select class="form-control" id="pos" name="position">
 											<option>Intern</option>
 											<option>Part Time</option>
 											<option>Full Time</option>
@@ -113,7 +119,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
