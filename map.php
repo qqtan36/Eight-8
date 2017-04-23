@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php 
+include 'company.php';
 session_start();
+
 //echo $_SESSION["location"];
 ?>
 <html>
@@ -33,6 +35,7 @@ session_start();
     <div id="map">
 
         <script>
+
             function initMap(){
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 8,
@@ -53,9 +56,10 @@ session_start();
 
                     geocoder.geocode({'address': address}, function(results, status) {
                         if (status === 'OK') {
-
-                            <?php foreach($_SESSION["companies"] as &$value){
-                                                       
+                            var contentString = 0;
+                            <?php for($x=0; $x< count($_SESSION["companies"]); $x++){
+                                      //echo var_export($value->getName());
+                         
                             ?>
                                 resultsMap.setCenter(results[0].geometry.location);
                                 var marker = new google.maps.Marker({
@@ -68,7 +72,7 @@ session_start();
                                 longitude = results[0].geometry.location.lng();
                                 var radius = '<?php echo $_SESSION['radius']; ?>';
                                 // content string for window stuff
-                                var contentString = "";
+                                contentString = contentString+'<?php echo $_SESSION["companies"][$x]->getName(); ?>';
                                 //info window stuff
                                 var infowindow = new google.maps.InfoWindow({
                                     content: contentString
