@@ -1,7 +1,5 @@
 <?php
 
-
-
     class company{
         public $name;
         public $website;
@@ -71,7 +69,7 @@
             return $this->name . "<br/>";
         }
         public function getWebsite(){
-            return $this->website . "<br/>";
+            return $this->website;
         }
 		 public function getTitle(){
             return $this->jobtitle . "<br/>";
