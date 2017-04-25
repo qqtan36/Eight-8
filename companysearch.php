@@ -96,6 +96,8 @@
 		//parses the job title from the json object
 		//echo "Job Title: ";
 		//var_export($decoded->response->employers[$x]->featuredReview->jobTitle);
+		//$companyObj->setTitle($decoded->response->employers[$x]->featuredReview->jobTitle);
+		
 		//echo "<br>";
 		//parses the location from the json object
 		//echo "Job Location: ";
@@ -117,6 +119,12 @@
 		//echo "Company Cons: ";
 		//var_export($decoded->response->employers[$x]->featuredReview->cons);
         $companyObj->setCons($decoded->response->employers[$x]->featuredReview->cons);
+		
+		//echo "<br>";
+		//parses the cons from the json object
+		//echo "Company Logo: ";
+		//var_export($decoded->response->employers[$x]->squareLogo);
+        $companyObj->setLogo($decoded->response->employers[$x]->squareLogo);
 
 		echo "<br>";
 		echo "<br>";
@@ -127,6 +135,7 @@
 
     foreach($_SESSION["companies"] as &$value){
         echo var_export($value->getName());
+		echo var_export($value->getLocation());
         
     }
 	//testing purposes
