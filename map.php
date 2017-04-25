@@ -44,87 +44,38 @@ session_start();
                 var geocoder = new google.maps.Geocoder();
 
                 $(document).ready(function(){
-                    geocodeAddress(geocoder, map);
-
-                });
-
-
-
-                function geocodeAddress(geocoder, resultsMap) {
-                    var address = '<?php echo $_SESSION['location']; ?>';
-
-
-                    geocoder.geocode({'address': address}, function(results, status) {
-                        if (status === 'OK') {
-                            var contentString = 0;
-                            <?php for($x=0; $x< count($_SESSION["companies"]); $x++){
-                                      //echo var_export($value->getName());
-                         
-                            ?>
-                                resultsMap.setCenter(results[0].geometry.location);
-                                var marker = new google.maps.Marker({
-                                    //	icon:'marker.png',
-                                    map: resultsMap,
-                                    position: results[0].geometry.location
-                                });
-
-                                latitude = results[0].geometry.location.lat();
-                                longitude = results[0].geometry.location.lng();
-                                var radius = '<?php echo $_SESSION['radius']; ?>';
+                    // geocodeAddress(geocoder, map);
+                    <?php
+                    for($x=0; $x< count($_SESSION["companies"]); $x++){
+                        //echo var_export($value->getName());   
+                    ?>
+                    $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+'<?php echo $_SESSION["companies"][$x]->getName() ." ".$_SESSION["location"]?>'+'&sensor=false', null, function (data) {
+                        var contentString = "";
+                        var p = data.results[0].geometry.location
+                        var latlng = new google.maps.LatLng(p.lat, p.lng);
+                        var marker = new google.maps.Marker({
+                            position: latlng,
+                            map: map
+                        });
                                 // content string for window stuff
                                 contentString = contentString+'<?php echo $_SESSION["companies"][$x]->getName(); ?>';
                                 //info window stuff
                                 var infowindow = new google.maps.InfoWindow({
                                     content: contentString
                                 });
-                                google.maps.event.addListener(marker, 'mouseover', function() {
+                                google.maps.event.addListener(marker, 'click', function() {
                                     infowindow.open(map,marker);
                                 });
-                            <?php 
-                                }
-                            ?>
-                            //                        
-                            //ajax call
-                            //                            $.ajax({
-                            //								type: "GET",       //Get method
-                            //                               // dataType: 'json',   //response return type
-                            //                                url: 'search.php', //the file the call goes to
-                            //                                data:{              //the variables passed through
-                            //                                    keyword: keyword,
-                            //                                    latitude: latitude,
-                            //                                    longitude: longitude,
-                            //                                    radius: radius,
-                            //                                    max: max
-                            //                                },
-                            //                                
-                            //                                success: function(data){  //what to do when the method call succeeds
-                            //								 //alert(data); //returns the data pass in an alert (for testing)
-                            //                                  //  $("#results").html(data);
-                            //                                    console.log(data);
-                            //                                    
-                            //                                    //content string for window stuff
-                            //                                    var contentString = data;
-                            //                                    //info window stuff
-                            //                                    var infowindow = new google.maps.InfoWindow({
-                            //                                        content: contentString
-                            //                                    });
-                            //                                    google.maps.event.addListener(marker, 'mouseover', function() {
-                            //                                        infowindow.open(map,marker);
-                            //                                    });
-                            //                                },
-                            //                                error: function( xhr, status, errorThrown ) {  //what to do when the method call fails
-                            //                                    alert( "Sorry, there was a problem!" );
-                            //                                    console.log( "Error: " + errorThrown );
-                            //                                    console.log( "Status: " + status );
-                            //                                    console.dir( xhr );
-                            //                              }
-                            //                        });
-                        } else {
-                            alert('Geocode was not successful for the following reason: ' + status);
-                        }
-
                     });
-                }
+
+                    <?php 
+                    }
+                    ?>
+                });
+
+
+
+
             }
         </script>    
 
