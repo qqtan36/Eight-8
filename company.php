@@ -1,4 +1,7 @@
 <?php
+
+
+
     class company{
         public $name;
         public $website;
@@ -11,6 +14,8 @@
         public $location;
         public $pros;
         public $cons;
+		public $logo;
+		public $jobtitle;
         
         public function setName($input){
             $this->name = $input;
@@ -18,6 +23,10 @@
         
         public function setWebsite($input){
             $this->website = $input;
+        }
+		
+		public function setTitle($input){
+            $this->jobtitle = $input;
         }
         
         public function setOverall($input){
@@ -48,10 +57,14 @@
             $this->location = $input;
         }
         public function setPros($input){
-            $this->cons = $input;
+            $this->pros = $input;
         }
         public function setCons($input){
-            $this->pros = $input;     
+            $this->cons = $input;     
+        }
+		
+		public function setLogo($input){
+            $this->logo = $input;
         }
         
         public function getName(){
@@ -59,6 +72,9 @@
         }
         public function getWebsite(){
             return $this->website . "<br/>";
+        }
+		 public function getTitle(){
+            return $this->jobtitle . "<br/>";
         }
         public function getOverall(){
             return $this->overall_rating . "<br/>";
@@ -87,6 +103,12 @@
         public function getCons(){
             return $this->cons . "<br/>";
         }
+		
+		public function getLogo(){
+            return $this->logo;
+        }
+		
+
     }
 
 ?>
