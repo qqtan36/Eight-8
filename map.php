@@ -1,123 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+<?php 
+include 'company.php';
+session_start();
+//echo $_SESSION["location"];
+?>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
 
-    <title>InstaJob</title>
+        <title>InstaJob</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/cover.css" rel="stylesheet">
-  </head>
+        <!-- Custom styles for this template -->
+        <link href="css/cover.css" rel="stylesheet">
+        <style>
+            #map {
+                height: 100%;
+                width: 100%;
+            }
+        </style>
 
-  <body>
+    </head>
 
-    <div class="site-wrapper">
+</html>
+<body>
 
-      <div class="site-wrapper-inner">
+    <div id="map" style="color:#000">
 
-        <div class="cover-container">
+        <script>
+            function initMap(){
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 8,
+                    center: {lat: 33.951935, lng: -83.357567}
+                });
+                var geocoder = new google.maps.Geocoder();
+                $(document).ready(function(){
+                    // geocodeAddress(geocoder, map);
+                    <?php
+                    for($x=0; $x< count($_SESSION["companies"]); $x++){
+                        //echo var_export($value->getName());   
+                    ?>
+                    $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+'<?php echo $_SESSION["companies"][$x]->getName() ." ".$_SESSION["location"]?>'+'&sensor=false', null, function (data) {
+                        var contentString = "";
+                        var p = data.results[0].geometry.location
+                        var latlng = new google.maps.LatLng(p.lat, p.lng);
+                        var marker = new google.maps.Marker({
+                            position: latlng,
+                            map: map
+                        });
+                                // content string for window stuff
+                                contentString = contentString+'<img src="'+'<?php echo $_SESSION["companies"][$x]->getLogo(); ?>'+'" height="50" width="50">'+'<?php echo $_SESSION["companies"][$x]->getName(); ?>'+'<br>'+'<b>Company Rating: </b>'+'<?php echo $_SESSION["companies"][$x]->getOverall();?>'
+								+'<b>Pros: </b>'+'<?php echo $_SESSION["companies"][$x]->getPros();?>'+'<b>Cons: </b>'+'<?php echo $_SESSION["companies"][$x]->getCons();?>'+'<b>Website: </b>'+'<a href="'+'<?php echo $_SESSION["companies"][$x]->getWebsite(); ?>'+'" style="color:blue">'+'<?php echo $_SESSION["companies"][$x]->getWebsite();?>'+'</a>';
+                                //info window stuff
+                                var infowindow = new google.maps.InfoWindow({
+                                    content: contentString
+                                });
+                                google.maps.event.addListener(marker, 'click', function() {
+                                    infowindow.open(map,marker);
+                                });
+                    });
+                    <?php 
+                    }
+                    ?>
+                });
+            }
+        </script>    
 
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 id="title" class="masthead-brand">InstaJob</h3>
-              <nav class="nav nav-masthead">
-                <a class="nav-link active" href="#">Home</a>
-              <!--  <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Contact</a>-->
-              </nav>
-            </div>
-          </div>
-          <div class="inner cover"style="color:#32363d">
-            <h1 class="cover-heading" >Locate your job.</h1>
-            <p class="lead">Job hunting and finding your location made easy. With our help you can see just how close and how far all of your potential jobs are from each other. You can even see how these companies compare to each other based on information from other users.</p>
-			
-            <p class="lead">
-              <!-- Trigger the modal with a button -->
-				<button type="button" class="btn btn-info btn-lg" data-toggle="modal" 
-				data-target="#myModal">Start Searching</button>
-				
-				<!-- Modal -->
-					<div id="myModal" class="modal fade" role="dialog" style="color:black">
-					  <div class="modal-dialog">
-
-						<!-- Modal content-->
-						<div class="modal-content">
-						  <div class="modal-header" >
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Job Search</h4>
-						  </div>
-						  
-						    <!-- Modal Body -->
-							<div class="modal-body">
-								
-								<form role="form" action="companysearch.php" method="GET">
-								  <div class="form-group">
-									<label for="Job Title">Job Title</label>
-									  <input type="text" class="form-control"
-									  id="jt" placeholder="Enter job title" name="title"/>
-								  </div>
-								  
-								  <div class="form-group">
-									<label for="location">Location:</label>
-									  <input type="text" class="form-control"
-										  id="locate" placeholder="Enter location" value="" name="location"/>
-								  </div>
-                                    
-								  <div class="form-group">
-									<label for="radius">Search radius:</label>
-									  <input type="range" min="0" max="100" value="25" class="form-control"
-										  id="radius" name="radius" onchange="showValue(this.value)" onchange="showValue(this.value)" />
-										  <span id="range">25</span>
-											<script type="text/javascript">
-											function showValue(newValue)
-											{
-												document.getElementById("range").innerHTML=newValue;
-											}
-											</script>                                   
-								  </div>
-								  
-								  <button type="submit" class="btn btn-primary">Submit</button>
-								</form>
-							</div>
-							<!-- Modal Body -->
-							
-							<!-- Modal Footer 
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-										data-dismiss="modal">
-											Close
-								</button>
-							</div>	
-							Modal Footer -->							
-						</div>
-						<!-- Modal content-->
-						</div>
-					</div>
-					<!-- Modal -->
-            </p>
-			</div>
-
-        </div>
-
-      </div>
 
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9A2a6sTMO8RS1RcE4yHEsSr24I1FKcD8&callback=initMap" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
-</html>
+</body>
