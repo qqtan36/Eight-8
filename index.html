@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Eight 8</title>
+    <title>InstaJob</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,9 +34,9 @@
               </nav>
             </div>
           </div>
-          <div class="inner cover">
-            <h1 class="cover-heading">Locate your job.</h1>
-            <p class="lead">(put information here)Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+          <div class="inner cover"style="color:#32363d">
+            <h1 class="cover-heading" >Locate your job.</h1>
+            <p class="lead">Job hunting and finding your location made easy. With our help you can see just how close and how far all of your potential jobs are from each other.</p>
 			
             <p class="lead">
               <!-- Trigger the modal with a button -->
@@ -72,19 +72,16 @@
                                     
 								  <div class="form-group">
 									<label for="radius">Search radius:</label>
-									  <input type="number" class="form-control"
-										  id="radius" placeholder="Enter location radius" name="radius"/>
-                                      
+									  <input type="range" min="0" max="100" value="25" class="form-control"
+										  id="radius" name="radius" onchange="showValue(this.value)" onchange="showValue(this.value)" />
+										  <span id="range">25</span>
+											<script type="text/javascript">
+											function showValue(newValue)
+											{
+												document.getElementById("range").innerHTML=newValue;
+											}
+											</script>                                   
 								  </div>
-                                    
-								  <div class="form-group">
-									<label for="position">Select Position:</label>
-										<select class="form-control" id="pos" name="position">
-											<option>Intern</option>
-											<option>Part Time</option>
-											<option>Full Time</option>
-									  </select>
-									</div>
 								  
 								  <button type="submit" class="btn btn-primary">Submit</button>
 								</form>
