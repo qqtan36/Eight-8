@@ -56,7 +56,7 @@ session_start();
                         });
                                 // content string for window stuff
                                 contentString = contentString+'<img src="'+'<?php echo $_SESSION["companies"][$x]->getLogo(); ?>'+'" height="50" width="50">'+'<?php echo $_SESSION["companies"][$x]->getName(); ?>'+'<br>'+'<b>Company Rating: </b>'+'<?php echo $_SESSION["companies"][$x]->getOverall();?>'
-								+'<b>Pros: </b>'+'<?php echo $_SESSION["companies"][$x]->getPros();?>'+'<b>Cons: </b>'+'<?php echo $_SESSION["companies"][$x]->getCons();?>'+'<b>Website: </b>'+'<a href="'+'<?php echo $_SESSION["companies"][$x]->getWebsite(); ?>'+'" style="color:blue">'+'<?php echo $_SESSION["companies"][$x]->getWebsite();?>'+'</a>';
+								+'<b>Pros: </b>'+'<?php echo $_SESSION["companies"][$x]->getPros();?>'+'<b>Cons: </b>'+'<?php echo $_SESSION["companies"][$x]->getCons();?>'+'<b>Website: </b>'+'<a href="http://'+'<?php echo $_SESSION["companies"][$x]->getWebsite(); ?>'+'" style="color:blue">'+'<?php echo $_SESSION["companies"][$x]->getWebsite();?>'+'</a>';
                                 //info window stuff
                                 var infowindow = new google.maps.InfoWindow({
                                     content: contentString
