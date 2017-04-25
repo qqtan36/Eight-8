@@ -2,7 +2,6 @@
 <?php 
 include 'company.php';
 session_start();
-
 //echo $_SESSION["location"];
 ?>
 <html>
@@ -13,7 +12,7 @@ session_start();
         <meta name="author" content="">
         <link rel="icon" href="../../favicon.ico">
 
-        <title>Term Project</title>
+        <title>InstaJob</title>
 
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -32,17 +31,15 @@ session_start();
 </html>
 <body>
 
-    <div id="map">
+    <div id="map" style="color:#000">
 
         <script>
-
             function initMap(){
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 8,
                     center: {lat: 33.951935, lng: -83.357567}
                 });
                 var geocoder = new google.maps.Geocoder();
-
                 $(document).ready(function(){
                     // geocodeAddress(geocoder, map);
                     <?php
@@ -67,15 +64,10 @@ session_start();
                                     infowindow.open(map,marker);
                                 });
                     });
-
                     <?php 
                     }
                     ?>
                 });
-
-
-
-
             }
         </script>    
 
