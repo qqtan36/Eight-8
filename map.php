@@ -41,14 +41,17 @@ session_start();
                 });
                 var geocoder = new google.maps.Geocoder();
                 $(document).ready(function(){
+                    var bounds = new google.maps.LatLngBounds();
+                    var markers = new Array();
                     // geocodeAddress(geocoder, map);
                     <?php
                     for($x=0; $x< count($_SESSION["companies"]); $x++){
                         //echo var_export($value->getName());   
                     ?>
-                    $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='+'<?php echo $_SESSION["companies"][$x]->getName() ." ".$_SESSION["location"]?>'+'&sensor=false', null, function (data) {
+                    $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=<?php echo $_SESSION["companies"][$x]->getName() ." ".$_SESSION["location"]?>&components=country:US', null, function (data) {
                         var contentString = "";
-                        var p = data.results[0].geometry.location
+                        var p = data.results[0].geometry.location;
+
                         var latlng = new google.maps.LatLng(p.lat, p.lng);
                         var marker = new google.maps.Marker({
                             position: latlng,
@@ -64,10 +67,22 @@ session_start();
                                 google.maps.event.addListener(marker, 'click', function() {
                                     infowindow.open(map,marker);
                                 });
+                        markers.push(marker);
+                        //bounds.extend(marker.getPosition());
+                             for(var i = 0; i <markers.length; i++ ){
+                        bounds.extend(markers[i].getPosition());
+                        map.setCenter(bounds.getCenter());
+
+                        map.fitBounds(bounds);
+                    }
                     });
+                   
                     <?php 
                     }
                     ?>
+                    
+                    
+
                 });
             }
         </script>    
